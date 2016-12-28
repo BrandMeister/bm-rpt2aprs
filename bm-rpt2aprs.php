@@ -39,6 +39,10 @@
 				echo "  invalid coordinates, ignoring\n";
 				continue;
 			}
+			if (time()-strtotime($result->last_updated) > 600) {
+				echo "  last update was too long ago, ignoring\n";
+				continue;
+			}
 
 			if ($result->priorityDescription != '')
 				$description = $result->priorityDescription;
