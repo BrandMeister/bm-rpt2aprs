@@ -46,8 +46,8 @@
 	{
 		global $aprs_socket;
 
-		echo "  sending location to aprs for $callsign\n";
-		echo "    aprs text: $aprs_text\n";
+		echo "	sending location to aprs for $callsign\n";
+		echo "	  aprs text: $aprs_text\n";
 
 		$timestamp = date('dHi');
 
@@ -131,8 +131,8 @@
 		$tosend = "$callsign>APRS,TCPIP*:@${timestamp}z" .
 			"$latitude$aprs_symbol1$longitude$aprs_symbol2$phg$aprs_text\n";
 
-		echo "    aprs data: $tosend";
+		echo "	  aprs data: $tosend";
 		if (socket_write($aprs_socket, $tosend, strlen($tosend)) === false)
-			echo "    send failed\n";
+			echo "	  send failed\n";
 	}
 ?>

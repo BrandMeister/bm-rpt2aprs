@@ -3,7 +3,7 @@
 Uploads repeaters of a Brandmeister network to APRS.
 
 The script queries repeater and hotspot IDs of a Brandmeister network ID
-from the Registry MySQL database, queries location and other data from the
+from the DBUS-API, queries location and other data from the
 API, and uploads them to the APRS-IS as objects.
 
 ## Usage
