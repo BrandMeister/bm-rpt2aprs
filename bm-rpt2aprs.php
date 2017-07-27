@@ -1,24 +1,25 @@
 #!/usr/bin/php
 <?php
-
 	ini_set('display_errors','On');
 	error_reporting(E_ALL);
 
 	chdir(dirname(__FILE__));
 
 	include('config.inc.php');
+	include('sql.inc.php');
 	include('aprs.inc.php');
-        include('dbus.inc.php');
 
 	echo "connecting to aprs...\n";
 	$aprs_socket = aprs_connect();
 	if ($aprs_socket === false)
 		return 1;
 
-	$repeater_ids = dbus_get_repeater_ids_for_network();
-//
-//        print_r($repeater_ids);
-//
+	$sql = sql_connect();
+	if ($sql === false)
+		return 1;
+
+	$repeater_ids = sql_get_repeater_ids_for_network($sql);
+	$sql->close();
 
 	if ($repeater_ids) {
 		foreach ($repeater_ids as $repeater_id) {
@@ -38,6 +39,7 @@
 				echo "  invalid coordinates, ignoring\n";
 				continue;
 			}
+			echo (time()-strtotime($result->last_updated)) ;
 			if (time()-strtotime($result->last_updated) > 12000) {
 				echo "  last update was too long ago, ignoring\n";
 				continue;
