@@ -1,14 +1,13 @@
 #!/usr/bin/php
 <?php
-
 	ini_set('display_errors','On');
 	error_reporting(E_ALL);
 
 	chdir(dirname(__FILE__));
 
 	include('config.inc.php');
-	include('aprs.inc.php');
 	include('dbus.inc.php');
+	include('aprs.inc.php');
 
 	echo "connecting to aprs...\n";
 	$aprs_socket = aprs_connect();
@@ -28,15 +27,15 @@
 			$result = file_get_contents("https://api.brandmeister.network/v1.0/repeater/?action=GET&q=$repeater_id", 0, $ctx);
 			$result = json_decode($result);
 			if (!isset($result->callsign)) {
-				echo "	no callsign, ignoring\n";
+				echo "  no callsign, ignoring\n";
 				continue;
 			}
 			if ($result->lat == 0 || $result->lng == 0) {
-				echo "	invalid coordinates, ignoring\n";
+				echo "  invalid coordinates, ignoring\n";
 				continue;
 			}
 			if (time()-strtotime($result->last_updated) > 600) {
-				echo "	last update was too long ago, ignoring\n";
+				echo "  last update was too long ago, ignoring\n";
 				continue;
 			}
 
@@ -57,6 +56,7 @@
 				$result->tx . '/' . $result->rx . ' CC' . $result->colorcode);
 		}
 	}
+
 
 	socket_close($aprs_socket);
 ?>
