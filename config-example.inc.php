@@ -10,12 +10,4 @@
 	define('APRS_DEFAULT_TEXT',				'Brandmeister DMR');
 	define('APRS_SYMBOL_REPEATER',			'/r');
 	define('APRS_SYMBOL_SIMPLEX_STATION',	'/Q');
-
-	// MySQL user, password, host, Registry database name and table names.
-	define('DMR_DB_USER',					'ham-dmr.hu');
-	define('DMR_DB_PASSWORD',				'');
-	define('DMR_DB_HOST',					'localhost');
-	define('DMR_DB_NAME',					'Registry');
-	define('DMR_DB_USERS_TABLE',			'Users');
-	define('DMR_DB_REPEATERS_TABLE',		'Repeaters');
 ?>

@@ -6,7 +6,7 @@
 	chdir(dirname(__FILE__));
 
 	include('config.inc.php');
-	include('sql.inc.php');
+	include('dbus.inc.php');
 	include('aprs.inc.php');
 
 	echo "connecting to aprs...\n";
@@ -14,12 +14,7 @@
 	if ($aprs_socket === false)
 		return 1;
 
-	$sql = sql_connect();
-	if ($sql === false)
-		return 1;
-
-	$repeater_ids = sql_get_repeater_ids_for_network($sql);
-	$sql->close();
+	$repeater_ids = dbus_get_repeater_ids_for_network();
 
 	if ($repeater_ids) {
 		foreach ($repeater_ids as $repeater_id) {
