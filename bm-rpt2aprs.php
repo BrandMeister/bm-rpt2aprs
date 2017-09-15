@@ -1,5 +1,6 @@
 #!/usr/bin/php
 <?php
+	date_default_timezone_set('UTC'); //Set timezone for everything to UTC
 	ini_set('display_errors','On');
 	error_reporting(E_ALL);
 
