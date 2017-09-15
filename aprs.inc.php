@@ -53,6 +53,10 @@
 
 		$degrees = aprs_decimal_degrees_to_dms(abs($latitude));
 		$hundredths = round(($degrees['seconds']/60)*100);
+		if ($hundredths == '100') {
+			$hundredths = substr($hundredths, -2);
+			$degrees['minutes'] = ++$degrees['minutes'];
+		}
 		$latitude = str_pad($degrees['degrees'], 2, '0', STR_PAD_LEFT) .
 			str_pad($degrees['minutes'], 2, '0', STR_PAD_LEFT) . '.' .
 			str_pad($hundredths, 2, '0', STR_PAD_LEFT) .
@@ -60,6 +64,10 @@
 
 		$degrees = aprs_decimal_degrees_to_dms(abs($longitude));
 		$hundredths = round(($degrees['seconds']/60)*100);
+		if ($hundredths == '100') {
+			$hundredths = substr($hundredths, -2);
+			$degrees['minutes'] = ++$degrees['minutes'];
+		}
 		$longitude = str_pad($degrees['degrees'], 3, '0', STR_PAD_LEFT) .
 			str_pad($degrees['minutes'], 2, '0', STR_PAD_LEFT) . '.' .
 			str_pad($hundredths, 2, '0', STR_PAD_LEFT) .
