@@ -52,14 +52,20 @@
 		$timestamp = date('dHi');
 
 		$degrees = aprs_decimal_degrees_to_dms(abs($latitude));
-		$hundredths = round(($degrees['seconds']/60)*100);
+		$hundredths = substr(round(($degrees['seconds']/60)*100), -2);
+		if ( round(($degrees['seconds']/60)*100) == '100' ) {
+			$degrees['minutes']=$degrees['minutes']+1;
+		}
 		$latitude = str_pad($degrees['degrees'], 2, '0', STR_PAD_LEFT) .
 			str_pad($degrees['minutes'], 2, '0', STR_PAD_LEFT) . '.' .
 			str_pad($hundredths, 2, '0', STR_PAD_LEFT) .
 			($latitude > 0 ? 'N' : 'S');
 
 		$degrees = aprs_decimal_degrees_to_dms(abs($longitude));
-		$hundredths = round(($degrees['seconds']/60)*100);
+		$hundredths = substr(round(($degrees['seconds']/60)*100), -2);
+		if ( round(($degrees['seconds']/60)*100) == '100' ) {
+			$degrees['minutes']=$degrees['minutes']+1;
+		}
 		$longitude = str_pad($degrees['degrees'], 3, '0', STR_PAD_LEFT) .
 			str_pad($degrees['minutes'], 2, '0', STR_PAD_LEFT) . '.' .
 			str_pad($hundredths, 2, '0', STR_PAD_LEFT) .
