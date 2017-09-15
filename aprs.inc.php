@@ -54,7 +54,7 @@
 		$degrees = aprs_decimal_degrees_to_dms(abs($latitude));
 		$hundredths = round(($degrees['seconds']/60)*100);
 		if ($hundredths == '100') {
-			// To avoid the "Invalid uncompressed location" error in case "hundredths" is 100
+			// In case "hundredths" is equal to 100, it is necessary to increase the minutes and clear the value further.
 			$hundredths = substr($hundredths, -2);
 			$degrees['minutes'] = $degrees['minutes'] + 1;
 		}
@@ -66,7 +66,7 @@
 		$degrees = aprs_decimal_degrees_to_dms(abs($longitude));
 		$hundredths = round(($degrees['seconds']/60)*100);
 		if ($hundredths == '100') {
-			// To avoid the "Invalid uncompressed location" error in case "hundredths" is 100
+			// In case "hundredths" is equal to 100, it is necessary to increase the minutes and clear the value further.
 			$hundredths = substr($hundredths, -2);
 			$degrees['minutes'] = $degrees['minutes'] + 1;
 		}
