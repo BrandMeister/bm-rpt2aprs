@@ -53,6 +53,12 @@
 
 		$degrees = aprs_decimal_degrees_to_dms(abs($latitude));
 		$hundredths = round(($degrees['seconds']/60)*100);
+		if ($hundredths == '100') {
+			// In case "hundredths" is equal to 100, it is necessary to increase the minutes and clear the value further.
+			// Example: 42.00N/01754.100E should became 42.00N/01755.00E
+			$hundredths = '00';
+			$degrees['minutes'] = $degrees['minutes'] + 1;
+		}
 		$latitude = str_pad($degrees['degrees'], 2, '0', STR_PAD_LEFT) .
 			str_pad($degrees['minutes'], 2, '0', STR_PAD_LEFT) . '.' .
 			str_pad($hundredths, 2, '0', STR_PAD_LEFT) .
@@ -60,6 +66,12 @@
 
 		$degrees = aprs_decimal_degrees_to_dms(abs($longitude));
 		$hundredths = round(($degrees['seconds']/60)*100);
+		if ($hundredths == '100') {
+			// In case "hundredths" is equal to 100, it is necessary to increase the minutes and clear the value further.
+			// Example: 42.00N/01754.100E should became 42.00N/01755.00E
+			$hundredths = '00';
+			$degrees['minutes'] = $degrees['minutes'] + 1;
+		}
 		$longitude = str_pad($degrees['degrees'], 3, '0', STR_PAD_LEFT) .
 			str_pad($degrees['minutes'], 2, '0', STR_PAD_LEFT) . '.' .
 			str_pad($hundredths, 2, '0', STR_PAD_LEFT) .
