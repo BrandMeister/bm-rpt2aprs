@@ -55,7 +55,7 @@
 		$hundredths = round(($degrees['seconds']/60)*100);
 		if ($hundredths == '100') {
 			// In case "hundredths" is equal to 100, it is necessary to increase the minutes and clear the value further.
-			// Example: 42.00N/01754.100E should became 42.00N/01755.00E
+			// Example: 42.00N/01754.100E should become 42.00N/01755.00E
 			$hundredths = '00';
 			$degrees['minutes'] = $degrees['minutes'] + 1;
 		}
@@ -68,7 +68,7 @@
 		$hundredths = round(($degrees['seconds']/60)*100);
 		if ($hundredths == '100') {
 			// In case "hundredths" is equal to 100, it is necessary to increase the minutes and clear the value further.
-			// Example: 42.00N/01754.100E should became 42.00N/01755.00E
+			// Example: 42.00N/01754.100E should become 42.00N/01755.00E
 			$hundredths = '00';
 			$degrees['minutes'] = $degrees['minutes'] + 1;
 		}
