@@ -140,6 +140,10 @@
 			$aprs_symbol2 = APRS_SYMBOL_REPEATER[1];
 		}
 
+		// CallSign with spaces are not accepted, need to be replaced with underscore
+		// Example: "SK0NN Stockholm" will become "SK0NN_Stockholm"
+		$callsign = str_replace(' ', '_', $callsign);
+
 		$tosend = "$callsign>APRS,TCPIP*:@${timestamp}z" .
 			"$latitude$aprs_symbol1$longitude$aprs_symbol2$phg$aprs_text\n";
 
