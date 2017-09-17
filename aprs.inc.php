@@ -140,9 +140,19 @@
 			$aprs_symbol2 = APRS_SYMBOL_REPEATER[1];
 		}
 
-		// CallSign with spaces are not accepted, need to be replaced with "-"
-		// Example: "SK0NN Stockholm" will become "SK0NN-Stockholm"
-		$callsign = str_replace(' ', '-', $callsign);
+		// Callsigns for AX.25 must:
+		// Consist of only upper case letters and numbers
+		// Have a base callsign before the SSID at least three characters long
+		// Have a numeric SSID which falls in 0 - 15
+		// Have a base callsign before the SSID no longer than six characters
+		// In this context alphanumeric is defined as any ASCII values in the range:
+		// decimal [65 - 90] - 'A'-'Z'
+		// decimal [48 - 57] - '0'-'9'
+
+		// Example:
+		// [SK0NN Stockholm] ==> [SK0NN]
+		// [SK0SX Kista] ==> [SK0SX]
+		$callsign =  preg_replace('/([^A-Z0-9]{3,9}|[^A-Z0-9]{3,7}-[^0-9A-Z]|[^A-Z0-9]{3,6}-1[^0-5]|\s.*$)/','', $callsign);
 
 		$tosend = "$callsign>APRS,TCPIP*:@${timestamp}z" .
 			"$latitude$aprs_symbol1$longitude$aprs_symbol2$phg$aprs_text\n";
