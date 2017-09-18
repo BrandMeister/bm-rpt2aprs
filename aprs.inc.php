@@ -41,6 +41,34 @@
 		return $result;
 	}
 
+	function make_callsign_valid($string) {
+		// Callsigns for AX.25 must:
+		// Consist of only upper case letters and numbers
+		// Have a base callsign before the SSID at least three characters long
+		// Have a numeric SSID which falls in 0 - 15
+		// Have a base callsign before the SSID no longer than six characters
+		// In this context alphanumeric is defined as any ASCII values in the range:
+		// decimal [65 - 90] - 'A'-'Z'
+		// decimal [48 - 57] - '0'-'9'
+
+		// Example:
+		// [SK0NN Stockholm] ==> [SK0NN]
+		// [SM6TKT/R] ==> [SM6TKT]
+		// [AX1DCX-12223323123] ==> [AX1DCX]
+		$keywords = preg_split("/[\s-\\/]+/", $string);
+		$keywords[0]=preg_replace('/[^A-Z0-9]+/', '', $keywords[0]);
+		if ( !empty($keywords[1]) ) {
+			if (strlen($keywords[0])>=7) {
+				if ( !($keywords[1] > 0 && $keywords[1] <= 9) ) { $keywords[1]=''; }
+			}
+			else
+			{
+				if ( !($keywords[1] > 0 && $keywords[1] <= 15) ) { $keywords[1]=''; }
+			}
+		}
+		return ( empty($keywords[1]) ? $keywords[0] : $keywords[0] ."-" .$keywords[1]);
+	}
+
 	function aprs_send_location($callsign, $simplex_station, $latitude, $longitude, $pep, $agl,
 		$gain, $aprs_text)
 	{
@@ -140,19 +168,7 @@
 			$aprs_symbol2 = APRS_SYMBOL_REPEATER[1];
 		}
 
-		// Callsigns for AX.25 must:
-		// Consist of only upper case letters and numbers
-		// Have a base callsign before the SSID at least three characters long
-		// Have a numeric SSID which falls in 0 - 15
-		// Have a base callsign before the SSID no longer than six characters
-		// In this context alphanumeric is defined as any ASCII values in the range:
-		// decimal [65 - 90] - 'A'-'Z'
-		// decimal [48 - 57] - '0'-'9'
-
-		// Example:
-		// [SK0NN Stockholm] ==> [SK0NN]
-		// [SK0SX Kista] ==> [SK0SX]
-		$callsign =  preg_replace('/([^A-Z0-9]{3,9}|[^A-Z0-9]{3,7}-[^0-9A-Z]|[^A-Z0-9]{3,6}-1[^0-5]|\s.*$)/','', $callsign);
+		$callsign = make_callsign_valid($callsign);
 
 		$tosend = "$callsign>APRS,TCPIP*:@${timestamp}z" .
 			"$latitude$aprs_symbol1$longitude$aprs_symbol2$phg$aprs_text\n";
