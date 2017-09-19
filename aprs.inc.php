@@ -68,7 +68,7 @@
 				}
 			}
 		}
-		return (empty($keywords[1]) ? $keywords[0] : $keywords[0] ."-" .$keywords[1]);
+		return (empty($keywords[1]) ? $keywords[0] : $keywords[0] . "-" .$keywords[1]);
 	}
 
 	function aprs_send_location($callsign, $simplex_station, $latitude, $longitude, $pep, $agl,
