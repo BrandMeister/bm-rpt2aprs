@@ -172,7 +172,7 @@
 
 		$callsign = make_callsign_valid($callsign);
 
-		$tosend = "$callsign>APRS,TCPIP*:@${timestamp}z" .
+		$tosend = "$callsign>APBM1S,TCPIP*:@${timestamp}z" .
 			"$latitude$aprs_symbol1$longitude$aprs_symbol2$phg$aprs_text\n";
 
 		echo "    aprs data: $tosend";
