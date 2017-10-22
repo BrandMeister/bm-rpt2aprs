@@ -16,3 +16,8 @@ You can periodically run this script from crontab. Crontab entry example:
 ```
 0,30 *  *   *   *     /home/nonoo/bm-rpt2aprs/bm-rpt2aprs.php &>/dev/null
 ```
+
+## NOTE
+
+Add NOGATE tag to hotspot's 'Priority Message' at your Brandmeister dashboard to prevent location reporting to APRS.
+

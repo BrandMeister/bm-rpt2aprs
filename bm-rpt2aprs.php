@@ -60,8 +60,8 @@
 				$callsign = $result->callsign;
 			}
 
-			if (strpos($description, '#noaprs') == true) {
-				echo "  #noaprs tag found, do not send location\n";
+			if (strpos(strtoupper($description), 'NOGATE') == true) {
+				echo "  NOGATE tag found, do not send location\n";
 			}
 			else {
 				aprs_send_location($callsign, ($result->tx == $result->rx), $result->lat,
