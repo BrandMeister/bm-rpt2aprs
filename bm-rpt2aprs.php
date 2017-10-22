@@ -51,7 +51,16 @@
 					$description = APRS_DEFAULT_TEXT;
 			}
 
-			aprs_send_location($result->callsign, ($result->tx == $result->rx), $result->lat,
+			if (strlen($repeater_id) == 9) {
+				echo "  parse ssid from repeater id\n";
+				$ssid = substr($repeater_id, 7, 2);
+				$callsign = $result->callsign . '-' . $ssid;
+			}
+			else {
+				$callsign = $result->callsign;
+			}
+
+			aprs_send_location($callsign, ($result->tx == $result->rx), $result->lat,
 				$result->lng, $result->pep, $result->agl, $result->gain, $description . ' ' .
 				$result->tx . '/' . $result->rx . ' CC' . $result->colorcode);
 		}
