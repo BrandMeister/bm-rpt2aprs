@@ -60,9 +60,14 @@
 				$callsign = $result->callsign;
 			}
 
-			aprs_send_location($callsign, ($result->tx == $result->rx), $result->lat,
-				$result->lng, $result->pep, $result->agl, $result->gain, $description . ' ' .
-				$result->tx . '/' . $result->rx . ' CC' . $result->colorcode);
+			if (strpos($description, '#noaprs') == true) {
+				echo "  #noaprs tag found, do not send location\n";
+			}
+			else {
+				aprs_send_location($callsign, ($result->tx == $result->rx), $result->lat,
+					$result->lng, $result->pep, $result->agl, $result->gain, $description . ' ' .
+					$result->tx . '/' . $result->rx . ' CC' . $result->colorcode);
+			}
 		}
 	}
 
