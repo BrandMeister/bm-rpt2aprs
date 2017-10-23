@@ -19,5 +19,5 @@ You can periodically run this script from crontab. Crontab entry example:
 
 ## NOTE
 
-Add NOGATE tag to hotspot's 'Priority Message' at your Brandmeister dashboard to prevent location reporting to APRS.
+Add NOAPRS or NOGATE tag to hotspot's 'Priority Message' at your Brandmeister dashboard to prevent location reporting to APRS.
 
