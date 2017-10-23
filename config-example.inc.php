@@ -9,5 +9,5 @@
 	define('APRS_SERVER_PORT',				14580);
 	define('APRS_DEFAULT_TEXT',				'Brandmeister DMR');
 	define('APRS_SYMBOL_REPEATER',			'/r');
-	define('APRS_SYMBOL_SIMPLEX_STATION',	'/Q');
+	define('APRS_SYMBOL_SIMPLEX_STATION',	'/n');
 ?>
