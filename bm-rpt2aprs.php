@@ -7,7 +7,6 @@
 	chdir(dirname(__FILE__));
 
 	include('config.inc.php');
-	include('dbus.inc.php');
 	include('aprs.inc.php');
 
 	echo "connecting to aprs...\n";
@@ -15,7 +14,7 @@
 	if ($aprs_socket === false)
 		return 1;
 
-	$repeater_ids = dbus_get_repeater_ids_for_network();
+	$repeater_ids = explode(" ", REPEATER_IDS);
 
 	if ($repeater_ids) {
 		foreach ($repeater_ids as $repeater_id) {
@@ -52,9 +51,25 @@
 					$description = APRS_DEFAULT_TEXT;
 			}
 
-			aprs_send_location($result->callsign, ($result->tx == $result->rx), $result->lat,
-				$result->lng, $result->pep, $result->agl, $result->gain, $description . ' ' .
-				$result->tx . '/' . $result->rx . ' CC' . $result->colorcode);
+			if (strlen($repeater_id) == 9) {
+				echo "  parse ssid from repeater id\n";
+				$ssid = substr($repeater_id, 7, 2);
+				$callsign = $result->callsign . '-' . $ssid;
+			}
+			else {
+				$callsign = $result->callsign;
+			}
+
+			if (strpos(strtoupper($description), 'NOGATE') === false &&
+					strpos(strtoupper($description), 'NOAPRS') === false) 
+			{
+				aprs_send_location($callsign, ($result->tx == $result->rx), $result->lat,
+					$result->lng, $result->pep, $result->agl, $result->gain, $description . ' ' .
+					$result->tx . '/' . $result->rx . ' CC' . $result->colorcode);
+			}
+			else {
+				echo "  NOGATE or NOAPRS tag found, the location is not reported to APRS-IS\n";
+			}
 		}
 	}
 
