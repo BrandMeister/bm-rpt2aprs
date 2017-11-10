@@ -55,7 +55,7 @@
 			// Parse SSID of an APRS object from the repeater id
 			if (strlen($repeater_id) == 9) {
 				echo "  parse ssid from repeater id\n";
-				$ssid = substr($repeater_id, 7, 2);
+				$ssid = ltrim(substr($repeater_id, 7, 2), '0');
 				$callsign = $result->callsign . '-' . $ssid;
 			} else
 				$callsign = $result->callsign;
