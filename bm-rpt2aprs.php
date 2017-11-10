@@ -52,9 +52,23 @@
 					$description = APRS_DEFAULT_TEXT;
 			}
 
-			aprs_send_location($result->callsign, ($result->tx == $result->rx), $result->lat,
-				$result->lng, $result->pep, $result->agl, $result->gain, $description . ' ' .
-				$result->tx . '/' . $result->rx . ' CC' . $result->colorcode);
+			// Parse SSID of an APRS object from the repeater id
+			if (strlen($repeater_id) == 9) {
+				echo "  parse ssid from repeater id\n";
+				$ssid = substr($repeater_id, 7, 2);
+				$callsign = $result->callsign . '-' . $ssid;
+			} else
+				$callsign = $result->callsign;
+
+			// Skip APRS reporting if NOGATE or NOAPRS tag is set
+			if (strpos(strtoupper($description), 'NOGATE') === false &&
+					strpos(strtoupper($description), 'NOAPRS') === false)
+			{
+				aprs_send_location($callsign, ($result->tx == $result->rx), $result->lat,
+					$result->lng, $result->pep, $result->agl, $result->gain, $description . ' ' .
+					$result->tx . '/' . $result->rx . ' CC' . $result->colorcode);
+			} else
+				echo "  NOGATE or NOAPRS tag found, skip reporting to APRS-IS\n";
 		}
 	}
 
