@@ -1,6 +1,6 @@
 <?php
 	function dbus_get_repeater_ids_for_network() {
-		$connection = new DBus(DBus::BUS_SYSTEM, true);
+		$connection = new DBus(DBus::BUS_SYSTEM, false);
 		$service = "me.burnaway.BrandMeister.N".NETWORK_ID;
 		$proxy = $connection->createProxy($service, "/me/burnaway/BrandMeister", "me.burnaway.BrandMeister");
 		$result = $proxy->getContextList();
