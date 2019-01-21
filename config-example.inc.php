@@ -1,7 +1,4 @@
 <?php
-	// Network ID from BrandMeister.conf
-	define('NETWORK_ID',					2162);
-
 	// User, passcode, server used for connecting to the APRS network.
 	define('APRS_CALLSIGN',					'HA2NON-14');
 	define('APRS_PASSCODE',					0);

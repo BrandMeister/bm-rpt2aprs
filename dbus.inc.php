@@ -1,9 +1,9 @@
 <?php
-	function dbus_get_repeater_ids_for_network() {
+	function dbus_get_repeater_ids_for_network($service) {
 		$connection = new DBus(DBus::BUS_SYSTEM, false);
-		$service = "me.burnaway.BrandMeister.N".NETWORK_ID;
-		$proxy = $connection->createProxy($service, "/me/burnaway/BrandMeister", "me.burnaway.BrandMeister");
-		$result = $proxy->getContextList();
+		$proxy = $connection->createProxy($service, OBJECT_PATH, INTERFACE_NAME);
+		$type = new DbusUInt32(2);
+		$result = $proxy->getContextList($type);
 
 		if (is_object($result) && get_class($result) == 'DbusArray') {
 			$list = $result->getData();
